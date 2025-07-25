@@ -149,13 +149,15 @@ def apply_config(loaded_config):
         INDEXER_CHECK_ENABLED = True
         INDEXER_IP = indexer_cfg.get('ip')
         INDEXER_PORT = indexer_cfg.get('port', 9200)
-        INDEXER_USERNAME = indexer_cfg.get('username')
         INDEXER_MINUTES_THRESHOLD = indexer_cfg.get('minutes_threshold')
         INDEXER_INDICES_PATTERN = indexer_cfg.get('indices_pattern', 'wazuh-alerts-*')
+        
+        # Cargar credenciales del Indexer desde el archivo .env
+        INDEXER_USERNAME = os.getenv('INDEXER_USERNAME')
         INDEXER_PASSWORD = os.getenv('INDEXER_PASSWORD')
 
         if not all([INDEXER_IP, INDEXER_USERNAME, INDEXER_PASSWORD, INDEXER_MINUTES_THRESHOLD]):
-            print("[ERROR CRÍTICO DE CONFIGURACIÓN INDEXER] Faltan 'ip', 'username', 'minutes_threshold' en config.yml o 'INDEXER_PASSWORD' en .env.")
+            print("[ERROR CRÍTICO DE CONFIGURACIÓN INDEXER] Faltan 'ip', 'minutes_threshold' en config.yml o faltan INDEXER_USERNAME/INDEXER_PASSWORD en el archivo .env.")
             sys.exit(1)
         try:
             INDEXER_PORT = int(INDEXER_PORT)
@@ -354,7 +356,7 @@ def main_logic():
     print("\n--- Se detectaron problemas. Preparando correo de alerta. ---")
     
     server_identifier = f"{hostname} ({server_ip})"
-    email_subject = f"⚠️ Alerta de Salud Servidor Wazuh: {server_identifier}"
+    email_subject = f"Alerta de Salud Servidor Wazuh: {server_identifier}"
     
     alert_messages_html = []
     if indexer_alert:
