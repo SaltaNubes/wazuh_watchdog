@@ -8,8 +8,8 @@ email_settings:
 
     sender_email: "example@compañia.com" # Dirección 'De:' que se mostrará
     recipient_emails: # Lista de destinatarios (esto ya lo tenías)
-      - "usuario1@empresa.com"
-      - "usuario2@empresa.com"
+      - "usuario1@mail.empresa.com"
+      - "usuario2@mail.empresa.com"
 
 # ... (wazuh_monitoring, disk_monitoring y global_settings sin cambios) ...
 wazuh_monitoring:
@@ -38,7 +38,7 @@ indexer_monitoring:
   port: 9200
 
   # Umbral en minutos. Si no hay eventos nuevos en este tiempo, se generará una alerta.
-  minutes_threshold: 1
+  minutes_threshold: 15
 
   # Índices a consultar. Generalmente no necesitas cambiar esto.
   indices_pattern: "wazuh-alerts-*"
