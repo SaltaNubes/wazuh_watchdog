@@ -5,15 +5,11 @@ email_settings:
     host: "email-smtp.us-east-1.amazonaws.com" # EJEMPLO: Servidor SMTP de AWS SES
     port: 587                 # Puerto común para TLS (o 465 para SSL directo, o 25)
     use_tls: true             # Poner en true si el servidor usa STARTTLS (común con puerto 587 o 25)
-    # use_ssl: false            # Poner en true si es conexión SSL directa (común con puerto 465)
-    
-    username: "TU_USUARIO_SMTP_IAM_o_SIMILAR" # Usuario para autenticarse en el servidor SMTP
-    # La contraseña SMTP se tomará del archivo .env (SMTP_PASSWORD)
 
-    sender_email: "tu_correo_remitente_verificado@example.com" # Dirección 'De:' que se mostrará
+    sender_email: "example@compañia.com" # Dirección 'De:' que se mostrará
     recipient_emails: # Lista de destinatarios (esto ya lo tenías)
-      - "destinatario1@example.com"
-      - "destinatario2@example.com"
+      - "usuario1@empresa.com"
+      - "usuario2@empresa.com"
 
 # ... (wazuh_monitoring, disk_monitoring y global_settings sin cambios) ...
 wazuh_monitoring:
@@ -22,12 +18,33 @@ wazuh_monitoring:
     - "wazuh-indexer"
     - "wazuh-dashboard"
 
+#Si el espacio libre en los path monitoreados es menor al umbral, la alerta se dispara.
 disk_monitoring:
   monitored_paths:
     - path: "/"
-      threshold_percentage: 50
-    - path: "/var"
-      threshold_percentage: 15
+      threshold_percentage: 10
+    #- path: "/var"
+    #  threshold_percentage: 15
+
+# NUEVA SECCIÓN PARA MONITOREAR EL INDEXER
+indexer_monitoring:
+  # Ponlo en 'true' para activar esta revisión
+  enabled: true
+
+  # IP del servidor donde corre el Wazuh Indexer
+  ip: "127.0.0.1"
+
+  # Puerto de la API del Wazuh Indexer (usualmente 9200)
+  port: 9200
+
+  # Usuario para la API del Indexer (usualmente 'admin')
+  username: "admin"
+
+  # Umbral en minutos. Si no hay eventos nuevos en este tiempo, se generará una alerta.
+  minutes_threshold: 1
+
+  # Índices a consultar. Generalmente no necesitas cambiar esto.
+  indices_pattern: "wazuh-alerts-*"
 
 global_settings:
-  log_level: "INFO"
+  log_level: "DEBUG"
