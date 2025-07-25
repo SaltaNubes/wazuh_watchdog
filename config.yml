@@ -37,9 +37,6 @@ indexer_monitoring:
   # Puerto de la API del Wazuh Indexer (usualmente 9200)
   port: 9200
 
-  # Usuario para la API del Indexer (usualmente 'admin')
-  username: "admin"
-
   # Umbral en minutos. Si no hay eventos nuevos en este tiempo, se generará una alerta.
   minutes_threshold: 1
 
@@ -47,4 +44,4 @@ indexer_monitoring:
   indices_pattern: "wazuh-alerts-*"
 
 global_settings:
-  log_level: "DEBUG"
+  log_level: "INFO"
