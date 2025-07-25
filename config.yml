@@ -23,8 +23,8 @@ disk_monitoring:
   monitored_paths:
     - path: "/"
       threshold_percentage: 10
-    #- path: "/var"
-    #  threshold_percentage: 15
+    - path: "/mnt/datos"
+      threshold_percentage: 10
 
 # NUEVA SECCIÓN PARA MONITOREAR EL INDEXER
 indexer_monitoring:
