@@ -1,8 +1,8 @@
 # config.yml
 
 email_settings:
-  smtp: # CAMBIO: De 'aws_ses' a 'smtp'
-    host: "email-smtp.us-east-1.amazonaws.com" # EJEMPLO: Servidor SMTP de AWS SES
+  smtp: 
+    host: "email-smtp.us-east-1.amazonaws.com" 
     port: 587                 # Puerto común para TLS (o 465 para SSL directo, o 25)
     use_tls: true             # Poner en true si el servidor usa STARTTLS (común con puerto 587 o 25)
 
