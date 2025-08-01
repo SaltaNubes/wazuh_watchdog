@@ -17,6 +17,7 @@ wazuh_monitoring:
     - "wazuh-manager"
     - "wazuh-indexer"
     - "wazuh-dashboard"
+    - "filebeat"
 
 #Si el espacio libre en los path monitoreados es menor al umbral, la alerta se dispara.
 disk_monitoring:
