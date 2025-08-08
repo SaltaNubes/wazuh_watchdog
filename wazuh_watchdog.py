@@ -4,8 +4,6 @@
 import subprocess
 import shutil
 import os
-import datetime
-from datetime import timedelta
 import sys
 import yaml
 import re
@@ -13,6 +11,7 @@ from dotenv import load_dotenv
 import socket
 import requests
 from requests.auth import HTTPBasicAuth
+from datetime import datetime, timezone, timedelta
 
 # IMPORTACIONES PARA SMTP
 import smtplib
@@ -62,7 +61,7 @@ def log_message(message, level="INFO"):
 
     # Solo imprimir si el nivel del mensaje es igual o más importante que el nivel global
     if message_level_num >= global_level_num:
-        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         prefix = ""
         # Añadir un prefijo para los niveles que no son INFO o DEBUG
         if message_level_num > level_map["INFO"]:
@@ -250,7 +249,7 @@ def check_indexer_activity():
     log_message(f"Verificando actividad del Wazuh Indexer ({INDEXER_IP}:{INDEXER_PORT})", "DEBUG")
     
     url = f"https://{INDEXER_IP}:{INDEXER_PORT}/{INDEXER_INDICES_PATTERN}/_count"
-    now_utc = datetime.datetime.utcnow()
+    now_utc = datetime.now(timezone.utc)
     time_ago = now_utc - timedelta(minutes=INDEXER_MINUTES_THRESHOLD)
     
     query_time_format = "%Y-%m-%dT%H:%M:%S.%f"
@@ -324,7 +323,7 @@ def send_smtp_email(subject_str, body_html):
 # --- Lógica Principal ---
 def main_logic():
     log_message("--- Iniciando Script de Verificación ---")
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")
     
     try:
         hostname = socket.gethostname()
