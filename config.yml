@@ -5,7 +5,11 @@ email_settings:
     host: "email-smtp.us-east-1.amazonaws.com" 
     port: 587                 # Puerto común para TLS (o 465 para SSL directo, o 25)
     use_tls: true             # Poner en true si el servidor usa STARTTLS (común con puerto 587 o 25)
-
+  rate_limit:
+    enabled: true           # 'true' para activar el bloqueo, 'false' para dejarlo como antes
+    max_emails: 3           # Cantidad máxima de correos permitidos
+    interval_minutes: 120    # Cada cuántos minutos se reinicia el contador (ej. 60 min = 1 hora)
+    
     sender_email: "example@compañia.com" # Dirección 'De:' que se mostrará
     recipient_emails: # Lista de destinatarios (esto ya lo tenías)
       - "usuario1@mail.empresa.com"
