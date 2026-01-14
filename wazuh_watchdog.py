@@ -447,8 +447,6 @@ def main_logic():
 
     log_message("--- Script de Verificación Finalizado ---")
 
-
-# --- Punto de Entrada ---
 if __name__ == "__main__":
     try:
         loaded_config_data = load_config(CONFIG_FILE_PATH)
